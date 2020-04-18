@@ -9,10 +9,17 @@ public class SimpleArrayTest {
 
     @Test
     public void add() {
-        SimpleArray<Integer> sa = new SimpleArray<>(new Integer[] {1, 2, null, 5});
-        Integer in = 3;
-        boolean result = sa.add(in);
-        assertThat(result, is(true));
+        SimpleArray<Integer> sa = new SimpleArray<>(new Integer[10]);
+        sa.add(4);
+        Integer result = sa.get(0);
+        assertThat(result, is(4));
+    }
+
+    @Test(expected = ArrayIndexOutOfBoundsException.class)
+    public void whenAddThenException() {
+        SimpleArray<Integer> sa = new SimpleArray<>(new Integer[1]);
+        sa.add(4);
+        Integer result = sa.get(1);
     }
 
     @Test
@@ -26,11 +33,17 @@ public class SimpleArrayTest {
     @Test
     public void set() {
         SimpleArray<Integer> sa = new SimpleArray<>(new Integer[] {1, 2, 5});
-        int index = 1;
-        Integer inNumber = 3;
-        sa.set(index, inNumber);
+        sa.set(1, 3);
         Integer result = sa.get(1);
         assertThat(result, is(3));
+    }
+
+    @Test(expected = ArrayIndexOutOfBoundsException.class)
+    public void whenSetThenException() {
+        SimpleArray<Integer> sa = new SimpleArray<>(new Integer[] {1, 2, 5});
+        int index = 3;
+        Integer inNumber = 3;
+        sa.set(index, inNumber);
     }
 
     @Test

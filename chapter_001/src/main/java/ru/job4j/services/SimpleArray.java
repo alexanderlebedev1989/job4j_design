@@ -12,23 +12,24 @@ public class SimpleArray<T> implements Iterator<T> {
         this.array = array;
     }
 
-    public boolean add(T model) {
-        boolean result = false;
-        for (T el : array) {
-            if (el == null) {
-                el = model;
-                result = true;
-                break;
-            }
+    public void add(T model) {
+        if (index >= array.length) {
+            throw new ArrayIndexOutOfBoundsException();
         }
-        return result;
+       array[index++] = model;
     }
 
     public void set(int index, T model) {
-       array[index] = model;
+        if (index >= array.length) {
+            throw new ArrayIndexOutOfBoundsException();
+        }
+        array[index] = model;
     }
 
     public T[] remove(int index) {
+        if (index >= array.length) {
+            throw new ArrayIndexOutOfBoundsException();
+        }
         System.arraycopy(array, index + 1, array, index, array.length - index - 1);
         array[array.length - 1] = null;
         return array;
