@@ -15,9 +15,9 @@ public class UserStore implements Store<User> {
     @Override
     public boolean replace(String id, User model) {
         boolean result = false;
-        User newUser = findById(id);
-        if (newUser != null) {
-            newUser = model;
+        int index = indexOf(id);
+        if (index != -1) {
+            mem.set(index, model);
             result = true;
         }
         return result;
@@ -26,9 +26,9 @@ public class UserStore implements Store<User> {
     @Override
     public boolean delete(String id) {
         boolean result = false;
-        User newUser = findById(id);
-        if (newUser != null) {
-            mem.remove(newUser);
+        int index = indexOf(id);
+        if (index != -1) {
+            mem.remove(mem.get(index));
             result = true;
         }
         return result;
@@ -36,13 +36,18 @@ public class UserStore implements Store<User> {
 
     @Override
     public User findById(String id) {
-        User newUser = null;
-        for (User user : mem) {
-            if (user.getId().equals(id)) {
-                newUser = user;
+        int index = indexOf(id);
+        return index != -1 ? mem.get(index) : null;
+    }
+
+    private int indexOf(String id) {
+        int result = -1;
+        for (int index = 0; index < mem.size(); index++) {
+            if (mem.get(index).getId().equals(id)) {
+                result = index;
                 break;
             }
         }
-        return newUser;
+        return result;
     }
 }

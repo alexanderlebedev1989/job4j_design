@@ -25,8 +25,9 @@ public class UserStoryTest {
         us.add(user1);
         us.add(user2);
         User user3 = new User("5");
-        boolean result = us.replace("1", user3);
-        assertThat(result, is(true));
+        us.replace("1", user3);
+        User result = us.findById("5");
+        assertThat(result, is(user3));
     }
 
     @Test

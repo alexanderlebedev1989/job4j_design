@@ -15,9 +15,9 @@ public class RoleStore implements Store<Role> {
     @Override
     public boolean replace(String id, Role model) {
         boolean result = false;
-        Role newRole = findById(id);
-        if (newRole != null) {
-            newRole = model;
+        int index = indexOf(id);
+        if (index != -1) {
+            mem.set(index, model);
             result = true;
         }
         return result;
@@ -26,9 +26,9 @@ public class RoleStore implements Store<Role> {
     @Override
     public boolean delete(String id) {
         boolean result = false;
-        Role newRole = findById(id);
-        if (newRole != null) {
-            mem.remove(newRole);
+        int index = indexOf(id);
+        if (index != -1) {
+            mem.remove(mem.get(index));
             result = true;
         }
         return result;
@@ -36,13 +36,18 @@ public class RoleStore implements Store<Role> {
 
     @Override
     public Role findById(String id) {
-        Role newRole = null;
-        for (Role role : mem) {
-            if (role.getId().equals(id)) {
-                newRole = role;
+        int index = indexOf(id);
+        return index != -1 ? mem.get(index) : null;
+    }
+
+    private int indexOf(String id) {
+        int result = -1;
+        for (int index = 0; index < mem.size(); index++) {
+            if (mem.get(index).getId().equals(id)) {
+                result = index;
                 break;
             }
         }
-        return newRole;
+        return result;
     }
 }
