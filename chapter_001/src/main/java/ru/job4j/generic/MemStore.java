@@ -28,7 +28,7 @@ public final class MemStore<T extends Base> implements Store<T> {
         boolean result = false;
         int index = indexOf(id);
         if (index != -1) {
-            mem.remove(mem.get(index));
+            mem.remove(index);
             result = true;
         }
         return result;
