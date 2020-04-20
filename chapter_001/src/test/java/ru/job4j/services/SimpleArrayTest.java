@@ -9,10 +9,19 @@ public class SimpleArrayTest {
 
     @Test
     public void add() {
-        SimpleArray<Integer> sa = new SimpleArray<>(new Integer[10]);
+        SimpleArray<Integer> sa = new SimpleArray<>(new Integer[2]);
         sa.add(4);
+        sa.add(2);
         Integer result = sa.get(0);
         assertThat(result, is(4));
+    }
+
+    @Test(expected = ArrayIndexOutOfBoundsException.class)
+    public void addException() {
+        SimpleArray<Integer> sa = new SimpleArray<>(new Integer[2]);
+        sa.add(4);
+        sa.add(2);
+        sa.add(1);
     }
 
     @Test(expected = ArrayIndexOutOfBoundsException.class)
