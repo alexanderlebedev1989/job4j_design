@@ -32,10 +32,11 @@ public class SimpleArray<T> implements Iterable<T> {
     }
 
     public void add(T model) {
-        if (indexOfEmpty() == -1) {
+        int index = indexOfEmpty();
+        if (index == -1) {
             throw new ArrayIndexOutOfBoundsException();
         }
-        array[index++] = model;
+        array[index] = model;
     }
 
     public void set(int index, T model) {
