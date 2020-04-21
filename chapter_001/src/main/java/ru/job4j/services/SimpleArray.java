@@ -32,15 +32,10 @@ public class SimpleArray<T> implements Iterable<T> {
     }
 
     public void add(T model) {
-        for (int i = 0; i <= array.length; i++) {
-            if (i >= array.length) {
-                throw new ArrayIndexOutOfBoundsException();
-            }
-            if (Objects.checkIndex(i, array.length) == index) {
-                array[index++] = model;
-                break;
-            }
+        if (indexOfEmpty() == -1) {
+            throw new ArrayIndexOutOfBoundsException();
         }
+        array[index++] = model;
     }
 
     public void set(int index, T model) {
@@ -64,5 +59,16 @@ public class SimpleArray<T> implements Iterable<T> {
             throw new ArrayIndexOutOfBoundsException();
         }
         return array[index];
+    }
+
+    public int indexOfEmpty() {
+        int value = -1;
+        for (int i = 0; i < array.length; i++) {
+            if (array[i] == null) {
+                value = i;
+                break;
+            }
+        }
+        return value;
     }
 }
