@@ -9,7 +9,7 @@ public class SimpleArray<T> implements Iterable<T> {
     private int size = 0;
     private int position = 0;
 
-    private Object[]array = new Object[size];
+    private Object[] array = new Object[size];
 
     public T get(int index) {
         if (index >= size) {
@@ -29,31 +29,23 @@ public class SimpleArray<T> implements Iterable<T> {
 
     @Override
     public Iterator<T> iterator() {
-        return new SimpleArrayIterator<T>() {
+        int expectedModCount = modCount;
+        return new Iterator<>() {
+            @Override
+            public boolean hasNext() {
+                return position != size;
+            }
+
+            @Override
+            public T next() {
+                if (modCount != expectedModCount) {
+                    throw new ConcurrentModificationException();
+                }
+                if (!hasNext()) {
+                    throw new NoSuchElementException();
+                }
+                return (T) array[position++];
+            }
         };
-    }
-
-    private class SimpleArrayIterator<T> implements Iterator<T> {
-        private int expectedModCount = modCount;
-
-        @Override
-        public boolean hasNext() {
-            return position != size;
-        }
-
-        @Override
-        public T next() {
-            checkForComodification();
-            if (!hasNext()) {
-                throw new NoSuchElementException();
-            }
-            return (T) array[position++];
-        }
-
-        final void checkForComodification() {
-            if (modCount != expectedModCount) {
-                throw new ConcurrentModificationException();
-            }
-        }
     }
 }
