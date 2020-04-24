@@ -5,6 +5,7 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 public class SimpleLinked<E> implements Iterable<E> {
+
     private Node<E> head;
     private int pos = -1;
     private int modCount = 0;
