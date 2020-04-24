@@ -8,7 +8,6 @@ import org.junit.Test;
 import java.util.NoSuchElementException;
 
 public class SimpleStackTest {
-
     @Test
     public void whenPushThenPoll() {
         SimpleStack<Integer> stack = new SimpleStack<>();

@@ -25,11 +25,11 @@ public class SimpleLinked<E> implements Iterable<E> {
     }
 
     public E get(int index) {
-        Node temp = head;
+        Node<E> temp = head;
         int currentIndex = 0;
         while (temp != null) {
             if (currentIndex == index) {
-                return (E) temp.value;
+                return temp.value;
             }
             temp = temp.next;
             currentIndex++;
@@ -45,12 +45,12 @@ public class SimpleLinked<E> implements Iterable<E> {
         if (idx == pos) {
             return deleteIfOneElement();
         }
-        Node temp = head;
+        Node<E> temp = head;
         while (idx != pos - 1) {
             temp = temp.next;
             idx++;
         }
-        E value = (E) temp.next.value;
+        E value = temp.next.value;
         temp.next = null;
         pos--;
         return value;
