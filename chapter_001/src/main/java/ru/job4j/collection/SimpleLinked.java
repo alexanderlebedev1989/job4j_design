@@ -4,22 +4,23 @@ import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-public class NewLinkedList<E> implements Iterable<E> {
+public class SimpleLinked<E> implements Iterable<E> {
     private Node<E> head;
-    private int modCount;
+    private int pos = -1;
+    private int modCount = 0;
 
     public void add(E value) {
         Node<E> node = new Node<>(value, null);
-        modCount++;
         if (head == null) {
             head = node;
-            return;
+        } else {
+            Node<E> temp = head;
+            while (temp.next != null) {
+                temp = temp.next;
+            }
+            temp.next = node;
         }
-        Node<E> temp = head;
-        while (temp.next != null) {
-            temp = temp.next;
-        }
-        temp.next = node;
+        pos++;
     }
 
     public E get(int index) {
@@ -34,6 +35,33 @@ public class NewLinkedList<E> implements Iterable<E> {
         }
         throw new ArrayIndexOutOfBoundsException();
     }
+
+    public E deleteLast() {
+        int idx = 0;
+        if (head == null) {
+            throw new NoSuchElementException();
+        }
+        if (idx == pos) {
+            return deleteIfOneElement();
+        }
+        Node temp = head;
+        while (idx != pos - 1) {
+            temp = temp.next;
+            idx++;
+        }
+        E value = (E) temp.next.value;
+        temp.next = null;
+        pos--;
+        return value;
+    }
+
+    public E deleteIfOneElement() {
+        E value = head.value;
+        head = head.next;
+        pos--;
+        return value;
+    }
+
 
     private static class Node<E> {
         private E value;

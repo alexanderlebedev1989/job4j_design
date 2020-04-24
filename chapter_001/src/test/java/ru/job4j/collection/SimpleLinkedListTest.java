@@ -8,10 +8,10 @@ import java.util.NoSuchElementException;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 
-public class NewLinkedListTest {
+public class SimpleLinkedListTest {
     @Test
     public void whenAddThenGet() {
-        NewLinkedList<String> array = new NewLinkedList<>();
+        SimpleLinked<String> array = new SimpleLinked<>();
         array.add("first");
         array.add("second");
         array.add("third");
@@ -21,7 +21,7 @@ public class NewLinkedListTest {
 
     @Test
     public void whenAddThenIt() {
-        NewLinkedList<String> array = new NewLinkedList<>();
+        SimpleLinked<String> array = new SimpleLinked<>();
         array.add("first");
         String rsl = array.iterator().next();
         assertThat(rsl, is("first"));
@@ -29,26 +29,26 @@ public class NewLinkedListTest {
 
     @Test(expected = ArrayIndexOutOfBoundsException.class)
     public void whenGetEmpty() {
-        NewLinkedList<String> array = new NewLinkedList<>();
+        SimpleLinked<String> array = new SimpleLinked<>();
         array.get(0);
     }
 
     @Test(expected = ArrayIndexOutOfBoundsException.class)
     public void whenGetOutBound() {
-        NewLinkedList<String> array = new NewLinkedList<>();
+        SimpleLinked<String> array = new SimpleLinked<>();
         array.add("first");
         array.get(1);
     }
 
     @Test(expected = NoSuchElementException.class)
     public void whenGetEmptyFromIt() {
-        NewLinkedList<String> array = new NewLinkedList<>();
+        SimpleLinked<String> array = new SimpleLinked<>();
         array.iterator().next();
     }
 
     @Test(expected = ConcurrentModificationException.class)
     public void whenCorruptedIt() {
-        NewLinkedList<String> array = new NewLinkedList<>();
+        SimpleLinked<String> array = new SimpleLinked<>();
         array.add("first");
         Iterator<String> it = array.iterator();
         array.add("third");
