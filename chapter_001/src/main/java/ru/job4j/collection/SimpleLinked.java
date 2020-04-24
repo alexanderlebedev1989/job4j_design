@@ -11,6 +11,7 @@ public class SimpleLinked<E> implements Iterable<E> {
     private int modCount = 0;
 
     public void add(E value) {
+        modCount++;
         Node<E> node = new Node<>(value, null);
         if (head == null) {
             head = node;
@@ -63,6 +64,9 @@ public class SimpleLinked<E> implements Iterable<E> {
         return value;
     }
 
+    public boolean emptyStack() {
+        return head == null;
+    }
 
     private static class Node<E> {
         private E value;
