@@ -22,9 +22,18 @@ public class SimpleArray<T> implements Iterable<T> {
         modCount++;
         if (index >= size) {
             array = Arrays.copyOf(array, size + 1);
+            size++;
         }
         array[index++] = model;
-        size++;
+    }
+
+    public boolean contains(T model) {
+        for (Object object : array) {
+            if (object.equals(model)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override
