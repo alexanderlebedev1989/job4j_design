@@ -17,9 +17,7 @@ class Tree<E> implements SimpleTree<E> {
             return true;
         }
         for (Node<E> n : node.get().children) {
-            if (n.value == child) {
-                return false;
-            }
+            if (n.value == child) return false;
         }
         node.get().children.add(new Node<E>(child));
         return true;
