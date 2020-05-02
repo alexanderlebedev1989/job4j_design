@@ -1,9 +1,6 @@
 package ru.job4j.collection;
 
-import java.util.Arrays;
-import java.util.ConcurrentModificationException;
-import java.util.Iterator;
-import java.util.NoSuchElementException;
+import java.util.*;
 
 public class MyHashMap<K, V> implements Iterable<V> {
     private int modCount;
@@ -72,12 +69,11 @@ public class MyHashMap<K, V> implements Iterable<V> {
                 if (!hasNext()) {
                     throw new NoSuchElementException();
                 }
-                if (array[position] != null) {
-                    Node<K, V> node = (Node<K, V>) array[position++];
-                    return node.getValue();
-                }
+                while (array[position] == null) {
                 position++;
-                return null;
+                }
+                Node<K, V> node = (Node<K, V>) array[position++];
+                return  node.getValue();
             }
         };
     }
@@ -88,14 +84,14 @@ public class MyHashMap<K, V> implements Iterable<V> {
         private V value;
         private Node<K, V> next;
 
-        public Node(int hash, K key, V value, Node<K, V> next) {
-            this.hash = hash;
-            this.key = key;
-            this.value = value;
-            this.next = next;
-        }
+       public Node(int hash, K key, V value, Node<K, V> next) {
+           this.hash = hash;
+           this.key = key;
+           this.value = value;
+           this.next = next;
+       }
 
-        public K getKey() {
+       public K getKey() {
             return key;
         }
 
@@ -118,6 +114,11 @@ public class MyHashMap<K, V> implements Iterable<V> {
        @Override
        public int hashCode() {
            return key != null ? key.hashCode() : 0;
+       }
+
+       @Override
+       public String toString() {
+           return  "key=" + key + ", value=" + value;
        }
    }
 }

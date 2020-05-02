@@ -1,10 +1,7 @@
 package ru.job4j.collection;
 
 import org.junit.Test;
-
-
 import java.util.Iterator;
-import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 
@@ -40,12 +37,7 @@ public class MyHashMapTest {
         myHashMap.insert("Li", "first");
         myHashMap.insert("Vladimir", "third");
         Iterator<String> it = myHashMap.iterator();
-        assertThat(it.next(), is(nullValue()));
-        it.next();
-        it.next();
-        it.next();
-        it.next();
-        it.next();
         assertThat(it.next(), is("third"));
+        assertThat(it.next(), is("first"));
     }
 }
