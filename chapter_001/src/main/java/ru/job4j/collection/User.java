@@ -1,9 +1,19 @@
 package ru.job4j.collection;
 
-import java.util.Calendar;
-
 public class User {
+    private int id;
     private String name;
-    private int children;
-    private Calendar birthday;
+
+    public User(int id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
 }
