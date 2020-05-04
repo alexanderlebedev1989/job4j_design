@@ -11,17 +11,20 @@ class Tree<E> implements SimpleTree<E> {
 
     @Override
     public boolean add(E parent, E child) {
-        Optional<Node<E>> node = findBy(parent);
-        if (node.isEmpty()) {
-            root.children.add(new Node<E>(child));
+        Optional<Node<E>> nodeOne = findBy(parent);
+        Optional<Node<E>> nodeTwo = findBy(child);
+        if (nodeOne.isEmpty() && nodeTwo.isEmpty()) {
+            Node<E> newParent = new Node<>(parent);
+            root.children.add(newParent);
+            newParent.children.add(new Node<E>(child));
             return true;
         }
-        for (Node<E> n : node.get().children) {
-            if (n.value == child) {
-                return false;
-            }
+        if (nodeOne.isEmpty() && !nodeTwo.isEmpty()) {
+            return false;
         }
-        node.get().children.add(new Node<E>(child));
+        if (!nodeOne.isEmpty() && nodeTwo.isEmpty()) {
+            nodeOne.get().children.add(new Node<E>(child));
+        }
         return true;
     }
 
