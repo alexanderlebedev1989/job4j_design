@@ -16,9 +16,12 @@ public class FreezeStr {
             if (!map.containsValue(iRight)) {
                 return false;
             }
-            Integer x = map.keySet().stream().
-                    filter(integer -> map.get(integer).equals(iRight)).findAny().get();
-            map.remove(x, iRight);
+            for (Integer k : map.keySet()) {
+                if (map.get(k).equals(iRight)) {
+                    map.remove(k, iRight);
+                    break;
+                }
+            }
         }
         return true;
     }
