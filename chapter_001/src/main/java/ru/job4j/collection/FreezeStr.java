@@ -1,29 +1,31 @@
 package ru.job4j.collection;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class FreezeStr {
 
     public static boolean eq(String left, String right) {
-        Map<Integer, Character> map = new HashMap<>();
-        for (int i = 0; i < left.length(); i++) {
-            char iLeft = left.charAt(i);
-            map.put(i, iLeft);
-        }
-        for (int i = 0; i < right.length(); i++) {
-            char iRight = right.charAt(i);
-            if (!map.containsValue(iRight)) {
+        List<Character> list1 = addList(left);
+        List<Character> list2 = addList(right);
+        for (Character c : list2) {
+            if (!list1.contains(c)) {
                 return false;
             }
-            for (Integer k : map.keySet()) {
-                if (map.get(k).equals(iRight)) {
-                    map.remove(k, iRight);
-                    break;
-                }
-            }
+            list1.remove(c);
         }
         return true;
+    }
+
+    public static List<Character> addList(String s) {
+        List<Character> list = new ArrayList<>();
+        for (int i = 0; i < s.length(); i++) {
+            char iLeft = s.charAt(i);
+            list.add(iLeft);
+        }
+        return list;
     }
 }
 
