@@ -1,9 +1,6 @@
 package ru.job4j.io;
 
-import org.w3c.dom.ls.LSOutput;
-
 import java.io.FileOutputStream;
-
 
 public class MatriceFile {
     public static void main(String[] args) {

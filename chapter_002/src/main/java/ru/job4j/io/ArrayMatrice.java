@@ -8,7 +8,7 @@ public class ArrayMatrice {
                 array[i][j] = i * j;
             }
         }
-        StringBuilder sb = new StringBuilder();
+
         for (int i = 1; i < array.length; i++) {
             for (int j = 1; j < array.length; j++) {
                 System.out.print(array[i][j] + " ");
