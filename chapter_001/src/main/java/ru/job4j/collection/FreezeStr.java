@@ -9,19 +9,25 @@ public class FreezeStr {
         if (left.length() != right.length()) {
             return false;
         }
-        Map<Integer, Character> map1 = new HashMap<>();
-        Map<Integer, Character> map2 = new HashMap<>();
+        int count = 1;
+        Map<Character, Integer> map = new HashMap<>();
         for (int i = 0; i < left.length(); i++) {
             char iLeft = left.charAt(i);
-            char iRight = right.charAt(i);
-            map1.put(i, iLeft);
-            map2.put(i, iRight);
+            if (map.containsKey(iLeft)) {
+                map.put(iLeft, map.get(iLeft) + count);
+            } else {
+                map.put(iLeft, count);
+            }
         }
-        for (Integer k : map2.keySet()) {
-            if (!map1.containsValue(map2.get(k))) {
+        for (int i = 0; i < right.length(); i++) {
+            char iRight = right.charAt(i);
+            if (!map.containsKey(iRight)) {
                 return false;
             }
-            map1.remove(map2.get(k));
+            map.put(iRight, map.get(iRight) - 1);
+            if (map.get(iRight) < 0) {
+                 return false;
+            }
         }
         return true;
     }
