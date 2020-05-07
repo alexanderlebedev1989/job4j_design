@@ -15,7 +15,7 @@ public class MyHashMap<K, V> implements Iterable<V> {
         int index = hash(key);
         if (countElement >= size * loadFactor) {
             array = Arrays.copyOf(array, size * 2);
-            size = size * 2;
+            size *= 2;
         }
         if (array[index] == null) {
             array[index] = new Node<>(hash(key), key, value, null);
@@ -24,6 +24,17 @@ public class MyHashMap<K, V> implements Iterable<V> {
             return true;
         }
         return false;
+    }
+
+    public Object[] increase(Object[] array) {
+        array = Arrays.copyOf(array, size * 2);
+        for (int i = 0; i < size; i++) {
+            int index = hash(array[i]);
+            array[index] = array[i];
+            array[i] = null;
+
+        }
+        return null;
     }
 
     public V get(K key) {
