@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LogFilter {
+
     public static List<String> filter(String file) {
         List<String> lines404 = new ArrayList<>();
         try (BufferedReader in = new BufferedReader(new FileReader(file))) {
