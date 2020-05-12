@@ -12,11 +12,10 @@ public class MyHashMap<K, V> implements Iterable<V> {
 
 
     public boolean insert(K key, V value) {
-        int index = hash(key);
         if (countElement >= size * loadFactor) {
-            array = Arrays.copyOf(array, size * 2);
-            size *= 2;
+            array = increase(array);
         }
+        int index = hash(key);
         if (array[index] == null) {
             array[index] = new Node<>(hash(key), key, value, null);
             countElement++;
@@ -27,14 +26,15 @@ public class MyHashMap<K, V> implements Iterable<V> {
     }
 
     public Object[] increase(Object[] array) {
-        array = Arrays.copyOf(array, size * 2);
-        for (int i = 0; i < size; i++) {
-            int index = hash(array[i]);
-            array[index] = array[i];
-            array[i] = null;
-
+        Object[] arrayNew = new Object[size * 2];
+        size *= 2;
+        for (Object o : array) {
+            if (o != null) {
+                int index = hash(o);
+                arrayNew[index] = o;
+            }
         }
-        return null;
+        return arrayNew;
     }
 
     public V get(K key) {
@@ -81,7 +81,7 @@ public class MyHashMap<K, V> implements Iterable<V> {
                     throw new NoSuchElementException();
                 }
                 while (array[position] == null) {
-                position++;
+                    position++;
                 }
                 Node<K, V> node = (Node<K, V>) array[position++];
                 return  node.getValue();
@@ -89,20 +89,20 @@ public class MyHashMap<K, V> implements Iterable<V> {
         };
     }
 
-   static class Node<K, V> {
+    static class Node<K, V> {
         private int hash;
         private K key;
         private V value;
         private Node<K, V> next;
 
-       public Node(int hash, K key, V value, Node<K, V> next) {
-           this.hash = hash;
-           this.key = key;
-           this.value = value;
-           this.next = next;
-       }
+        public Node(int hash, K key, V value, Node<K, V> next) {
+            this.hash = hash;
+            this.key = key;
+            this.value = value;
+            this.next = next;
+        }
 
-       public K getKey() {
+        public K getKey() {
             return key;
         }
 
@@ -110,26 +110,26 @@ public class MyHashMap<K, V> implements Iterable<V> {
             return value;
         }
 
-       @Override
-       public boolean equals(Object o) {
-           if (this == o) {
-               return true;
-           }
-           if (o == null || getClass() != o.getClass()) {
-               return false;
-           }
-           Node<?, ?> node = (Node<?, ?>) o;
-           return key != null ? key.equals(node.key) : node.key == null;
-       }
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) {
+                return true;
+            }
+            if (o == null || getClass() != o.getClass()) {
+                return false;
+            }
+            Node<?, ?> node = (Node<?, ?>) o;
+            return key != null ? key.equals(node.key) : node.key == null;
+        }
 
-       @Override
-       public int hashCode() {
-           return key != null ? key.hashCode() : 0;
-       }
+        @Override
+        public int hashCode() {
+            return key != null ? key.hashCode() : 0;
+        }
 
-       @Override
-       public String toString() {
-           return  "key=" + key + ", value=" + value;
-       }
-   }
+        @Override
+        public String toString() {
+            return  "key=" + key + ", value=" + value;
+        }
+    }
 }
