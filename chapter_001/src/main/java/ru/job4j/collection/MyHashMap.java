@@ -41,7 +41,8 @@ public class MyHashMap<K, V> implements Iterable<V> {
         V value = null;
         int index = hash(key);
         Node<K, V> node = (Node<K, V>) array[index];
-        if (key.hashCode() == node.getKey().hashCode() && key.equals(node.getKey())) {
+        if (key == null
+                || key.hashCode() == node.getKey().hashCode() && key.equals(node.getKey())) {
             value = node.getValue();
         }
         return value;
@@ -50,7 +51,8 @@ public class MyHashMap<K, V> implements Iterable<V> {
     boolean delete(K key) {
         int index = hash(key);
         Node<K, V> node = (Node<K, V>) array[index];
-        if (key.hashCode() == node.getKey().hashCode() && key.equals(node.getKey())) {
+        if (key == null
+                || key.hashCode() == node.getKey().hashCode() && key.equals(node.getKey())) {
             array[index] = null;
             modCount++;
             countElement--;
@@ -69,6 +71,9 @@ public class MyHashMap<K, V> implements Iterable<V> {
         return new Iterator<>() {
             @Override
             public boolean hasNext() {
+                while (array[position] == null) {
+                    position++;
+                }
                 return position != size;
             }
 
@@ -79,9 +84,6 @@ public class MyHashMap<K, V> implements Iterable<V> {
                 }
                 if (!hasNext()) {
                     throw new NoSuchElementException();
-                }
-                while (array[position] == null) {
-                    position++;
                 }
                 Node<K, V> node = (Node<K, V>) array[position++];
                 return  node.getValue();
