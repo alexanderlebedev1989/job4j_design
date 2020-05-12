@@ -6,44 +6,25 @@ public class Analize {
 
     public Info diff(List<User> previous, List<User> current) {
         Info info = new Info(0, 0, 0);
-        info.setDeleted(previous.size() - countDeletedOrAdded(previous, current));
-        info.setAdded(current.size() - countDeletedOrAdded(previous, current));
-        info.setChanged(countChanged(previous, current));
-        return info;
-    }
-
-    public int countChanged(List<User> previous, List<User> current) {
-        int count = 0;
-        Map<Integer, User> map = newHashMap(previous);
-        for (Integer k : map.keySet()) {
-            if (current.contains(map.get(k))) {
-                int index = current.indexOf(map.get(k));
-                User userNew = current.get(index);
-                if (!userNew.getName().equals(map.get(k).getName())) {
-                    count++;
+        int countChanged = 0;
+        int countDelOrAdd = 0;
+        Map<Integer, User> map = new HashMap<>();
+        for (User pUser : previous) {
+            map.put(pUser.getId(), pUser);
+        }
+        for (User cUser : current) {
+            if (map.containsKey(cUser.getId())) {
+                countDelOrAdd++;
+                User user = map.get(cUser.getId());
+                if (!user.getName().equals(cUser.getName())) {
+                    countChanged++;
                 }
             }
         }
-        return count;
-    }
-
-    public int countDeletedOrAdded(List<User> previous, List<User> current) {
-        int count = 0;
-        Map<Integer, User> map = newHashMap(previous);
-        for (User user : current) {
-            if (map.containsValue(user)) {
-                count++;
-            }
-        }
-        return count;
-    }
-
-    public Map<Integer, User> newHashMap(List<User> previous) {
-        Map<Integer, User> map = new HashMap<>();
-        for (int i = 0; i < previous.size(); i++) {
-            map.put(i, previous.get(i));
-        }
-        return map;
+        info.setDeleted(previous.size() - countDelOrAdd);
+        info.setAdded(current.size() - countDelOrAdd);
+        info.setChanged(countChanged);
+        return info;
     }
 
     public static class Info {
