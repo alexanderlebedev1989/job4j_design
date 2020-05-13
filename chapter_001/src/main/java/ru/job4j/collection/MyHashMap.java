@@ -16,6 +16,12 @@ public class MyHashMap<K, V> implements Iterable<V> {
             array = increase(array);
         }
         int index = hash(key);
+        Node<K, V> node = (Node<K, V>) array[index];
+        if (array[index] != null &&
+                (key.hashCode() == node.getKey().hashCode() && key.equals(node.getKey()))) {
+            node.setValue(value);
+            return true;
+        }
         if (array[index] == null) {
             array[index] = new Node<>(hash(key), key, value, null);
             countElement++;
@@ -102,6 +108,10 @@ public class MyHashMap<K, V> implements Iterable<V> {
             this.key = key;
             this.value = value;
             this.next = next;
+        }
+
+        public void setValue(V value) {
+            this.value = value;
         }
 
         public K getKey() {
